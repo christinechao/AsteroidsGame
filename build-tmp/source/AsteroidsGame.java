@@ -1,8 +1,24 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class AsteroidsGame extends PApplet {
+
 private SpaceShip spaceshipOne;
 Star [] stars;
 public void setup() 
 {
-  background(#180C4A);
+  background(0xff180C4A);
   size(1000,600);
   spaceshipOne = new SpaceShip();
   stars = new Star[120];
@@ -12,7 +28,7 @@ public void setup()
 }
 public void draw() 
 {
-  background(#180C4A);
+  background(0xff180C4A);
   spaceshipOne.show();
   spaceshipOne.move();
   for(int i=0; i<stars.length; i++){
@@ -27,15 +43,15 @@ public void draw()
       spaceshipOne.rotate(10);
     }
     if(keyCode == UP){
-      spaceshipOne.accelerate(0.05);
+      spaceshipOne.accelerate(0.05f);
     }
     if(keyCode == DOWN){
-    spaceshipOne.accelerate(-0.05);
+    spaceshipOne.accelerate(-0.05f);
     }
   }
 }
 
-void keyPressed(){
+public void keyPressed(){
   if(key == ' '){
       spaceshipOne.setX((int)(Math.random()*1000));
       spaceshipOne.setY((int)(Math.random()*600));
@@ -55,7 +71,7 @@ class Star{
     noStroke();
     fill(255);
     float angle = TWO_PI / 5;
-    float halfAngle = angle/2.0;
+    float halfAngle = angle/2.0f;
     beginShape();
     for (float a = 0; a < TWO_PI; a += angle) {
       float sx = myX + cos(a) * 2;
@@ -181,3 +197,12 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   }   
 } 
 
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "AsteroidsGame" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
+}
