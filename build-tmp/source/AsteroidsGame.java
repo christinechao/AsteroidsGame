@@ -15,8 +15,9 @@ import java.io.IOException;
 public class AsteroidsGame extends PApplet {
 
 private SpaceShip spaceshipOne;
-private Asteroid [] asteroids;
+private ArrayList <Asteroid> asteroids;
 Star [] stars;
+
 public void setup() 
 {
   background(0xff180C4A);
@@ -26,25 +27,27 @@ public void setup()
   for(int i=0; i<stars.length; i++){
     stars[i] = new Star();
   }
-  asteroids = new Asteroid[10];
-  for(int i=0; i<asteroids.length; i++){
-    asteroids[i] = new Asteroid();
+  asteroids = new ArrayList <Asteroid>();
+  for(int i=0; i<10; i++){
+    asteroids.add(new Asteroid());
   }
 }
+
 public void draw() 
 {
   background(0xff180C4A);
   for(int i=0; i<stars.length; i++){
     stars[i].show();
   }
-  for(int i=0; i<asteroids.length; i++){
-    asteroids[i].show();
-    asteroids[i].move();
+  for(int i=0; i<asteroids.size(); i++){
+    asteroids.get(i).show();   
+    asteroids.get(i).move();  
+    if (dist(spaceshipOne.getX(), spaceshipOne.getY(), asteroids.get(i).getX(), asteroids.get(i).getY()) < 50) {
+      asteroids.remove(i);
+    }
   }
   spaceshipOne.show();
   spaceshipOne.move();
-
-
 
   if (keyPressed == true){
     if(keyCode == LEFT){
@@ -173,6 +176,7 @@ class SpaceShip extends Floater
   public double getPointDirection() {return myPointDirection;} 
 
 }
+
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
